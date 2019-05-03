@@ -6,6 +6,7 @@ import android.os.Environment
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
+import android.widget.Button
 import android.widget.TextView
 import com.camerakit.CameraKit
 import com.camerakit.CameraKitView
