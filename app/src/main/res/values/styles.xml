@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="NumPadBottomBar" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="CameraDialogStyle" parent="android:Theme.Dialog">
+        <!--<item name="android:background">@android:color/transparent</item>-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:background">@drawable/view_background</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+
+        <!--<item name="button"-->
+        <item name="android:buttonTint">@color/colorAccent</item>
+
+    </style>
+
+</resources>
