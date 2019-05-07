@@ -88,6 +88,7 @@ class LogInActivity : AppCompatActivity() {
         otp_views.visibility = View.GONE
         submit_button.visibility = View.GONE
         parent_card.visibility = View.VISIBLE
+        login_fab.hide()
     }
 
     private fun initializeView() {
