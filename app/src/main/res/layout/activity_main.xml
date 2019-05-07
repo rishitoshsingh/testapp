@@ -20,21 +20,123 @@
             android:layout_gravity="center_horizontal"
             android:src="@drawable/ic_smartphone_black_48dp" />
 
-        <TextView
-            android:id="@+id/number_text_view"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginEnd="48dp"
             android:layout_marginStart="48dp"
             android:layout_marginTop="16dp"
-            android:autoSizeTextType="uniform"
+            android:layout_marginEnd="48dp"
+            android:focusableInTouchMode="true">
+
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/number_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autoSizeTextType="uniform"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:hint="@string/enter_your_number"
+                android:letterSpacing="0.4"
+                android:textColor="@color/icons"
+                android:textColorHint="@color/icons"
+                android:textSize="18sp" />
+
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/take_selfie"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/pill_button_border"
+            android:text="@string/take_selfie"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="48dp"
+            android:background="@drawable/pill_button"
+            android:text="@string/log_in"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/enter_otp_text_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="8dp"
+            android:text="@string/enter_otp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/otp_radios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:clickable="true"
             android:focusable="true"
-            android:foreground="?attr/selectableItemBackgroundBorderless"
-            android:gravity="center"
-            android:text="Enter Your Number"
-            android:textColor="@color/icons"
-            android:textSize="48sp" />
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:clickable="false" />
+
+            <RadioButton
+                android:id="@+id/second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:clickable="false" />
+
+            <RadioButton
+                android:id="@+id/third"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:clickable="false" />
+
+            <RadioButton
+                android:id="@+id/fourth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:clickable="false" />
+
+            <RadioButton
+                android:id="@+id/fifth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:clickable="false" />
+
+            <RadioButton
+                android:id="@+id/sixth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:clickable="false" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -55,8 +157,8 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:src="@drawable/ic_arrow_up"
         app:layout_anchor="@id/numpad_bottom_sheet"
         app:layout_anchorGravity="end" />

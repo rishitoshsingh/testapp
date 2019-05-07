@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">TestApp</string>
+    <string name="enter_your_number">Enter Your Number</string>
+    <string name="enter_otp">Enter OTP :</string>
+    <string name="log_in">Log In</string>
+    <string name="take_selfie">Take Selfie</string>
 </resources>
