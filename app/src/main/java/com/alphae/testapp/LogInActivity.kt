@@ -58,7 +58,7 @@ class LogInActivity : AppCompatActivity() {
                         oldUser = true
                         user?.updateVisit()
                         child.ref.setValue(user)
-                        updateUiforUser(child.getValue(User::class.java))
+                        updateUiforUser(user)
                         //Do Something
                     }
                 }
@@ -88,6 +88,7 @@ class LogInActivity : AppCompatActivity() {
         otp_views.visibility = View.GONE
         submit_button.visibility = View.GONE
         parent_card.visibility = View.VISIBLE
+        welcome_text.visibility = View.VISIBLE
         login_fab.hide()
     }
 

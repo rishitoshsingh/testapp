@@ -15,6 +15,17 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/welcome_text"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center"
+            android:text="@string/welcome"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:visibility="gone" />
+
         <EditText
             android:id="@+id/placeholder_edittext"
             android:layout_width="match_parent"
@@ -153,20 +164,11 @@
                     android:layout_height="380dp" />
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:gravity="center"
-                    android:text="@string/welcome"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="22sp" />
-
-                <TextView
                     android:id="@+id/user_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="8dp"
-                    android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:textSize="18sp" />
 
@@ -176,7 +178,6 @@
                     android:layout_height="48dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_margin="8dp"
-                    android:autoSizeTextType="uniform"
                     android:gravity="center"
                     android:textSize="18sp" />
 

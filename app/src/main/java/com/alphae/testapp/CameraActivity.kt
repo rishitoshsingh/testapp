@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_camera.*
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.util.*
 
 
 class CameraActivity : AppCompatActivity() {
@@ -72,7 +73,8 @@ class CameraActivity : AppCompatActivity() {
         Toast.makeText(this, "Uploading", Toast.LENGTH_LONG).show()
         val storage = FirebaseStorage.getInstance()
         val storageRef = storage.reference
-        val imagesRef = storageRef.child("images/")
+        var uniqueID = UUID.randomUUID().toString()
+        val imagesRef = storageRef.child("images/$uniqueID.jpg")
         val stream = FileInputStream(file)
         val uploadTask = imagesRef.putStream(stream)
         val urlTask = uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
