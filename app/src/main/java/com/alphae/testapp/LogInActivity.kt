@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.TaskExecutors
 import com.google.firebase.FirebaseException
@@ -78,9 +77,10 @@ class LogInActivity : AppCompatActivity() {
         user_phone_number.text = user?.mPhoneNumber.toString()
         user_visit_count.text = "Visits : " + user?.mVisitCount.toString()
         val uri = Uri.parse(user?.mUploadedUrl)
-        Glide.with(this)
-                .load(uri)
-                .into(user_image)
+        user_image.setImageURI(user?.mUploadedUrl)
+//        Glide.with(this)
+//                .load(uri)
+//                .into(user_image)
     }
 
     private fun toggleScreen() {

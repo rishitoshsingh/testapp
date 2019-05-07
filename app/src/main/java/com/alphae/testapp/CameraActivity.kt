@@ -33,7 +33,7 @@ class CameraActivity : AppCompatActivity() {
 
 
         camera_button.setOnClickListener {
-
+            camera_button.isEnabled = false
             cameraKitView?.captureImage(CameraKitView.ImageCallback { cameraKitView, capturedImage ->
                 val savedPhoto = File(Environment.getExternalStorageDirectory(), "photo.jpg")
                 try {
