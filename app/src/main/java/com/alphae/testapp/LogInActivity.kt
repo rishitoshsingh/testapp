@@ -3,17 +3,19 @@ package com.alphae.testapp
 import android.net.Uri
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.TaskExecutors
 import com.google.firebase.FirebaseException
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -27,7 +29,7 @@ class LogInActivity : AppCompatActivity() {
     private var mTextViews: ArrayList<TextView> = ArrayList()
 
     private var mVerificationId: String? = null
-    private val mAuth: FirebaseAuth? = null
+    private var mAuth: FirebaseAuth? = null
     private var otp: String = ""
 
     private lateinit var mPhoneNumber: String
@@ -37,7 +39,6 @@ class LogInActivity : AppCompatActivity() {
     private var mBottomSheetBehaviour: BottomSheetBehavior<*>? = null
 
     private val mDatabase = FirebaseDatabase.getInstance()
-    private val mUsers: ArrayList<User> = ArrayList()
     private var oldUser = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +46,7 @@ class LogInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         mPhoneNumber = intent.getStringExtra("phoneNumber")
         mUploadedUrl = intent.getStringExtra("uploadedUrl")
-
+        mAuth = FirebaseAuth.getInstance()
         initializeView()
 
         val visitorDatabaseRef = mDatabase.getReference("visitors")
@@ -126,13 +127,14 @@ class LogInActivity : AppCompatActivity() {
                 val uniqueKey = visitorDatabaseRef.push().key
                 val user = User(mPhoneNumber, mUploadedUrl, 1)
                 visitorDatabaseRef.child(uniqueKey!!).setValue(user)
-
+                Snackbar.make(login_root, "Verification Failed", Snackbar.LENGTH_LONG).show()
 //                Toast.makeText(baseContext, e.message, Toast.LENGTH_LONG).show()
                 Log.d(TAG, "onVerificationFailed", e)
             }
 
             override fun onCodeSent(s: String?, forceResendingToken: PhoneAuthProvider.ForceResendingToken?) {
                 Log.d(TAG, "Code Sent")
+                submit_button.isEnabled = true
                 Log.d(TAG, "mVerificationId = $s")
                 mVerificationId = s
                 super.onCodeSent(s, forceResendingToken)
@@ -142,7 +144,7 @@ class LogInActivity : AppCompatActivity() {
 
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
                 "+91$mobile",
-                60,
+                30,
                 TimeUnit.SECONDS,
                 TaskExecutors.MAIN_THREAD,
                 mCallbacks)
@@ -157,15 +159,17 @@ class LogInActivity : AppCompatActivity() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        Log.d(TAG, "SignInWithPhoneAuthCredential")
         mAuth?.signInWithCredential(credential)
-                ?.addOnCompleteListener(this, OnCompleteListener<AuthResult> { task ->
-                    if (task.isSuccessful) {
+                ?.addOnCompleteListener {
+                    if (it.isSuccessful) {
                         val visitorDatabaseRef = mDatabase.getReference("visitors")
                         val uniqueKey = visitorDatabaseRef.push().key
                         val user = User(mPhoneNumber, mUploadedUrl, 1)
                         visitorDatabaseRef.child(uniqueKey!!).setValue(user)
                         updateUiforUser(user)
-                        Toast.makeText(this, "Verified", Toast.LENGTH_LONG).show()
+                        Log.d(TAG, "SignIn Successful")
+                        Snackbar.make(login_root, "Verified", Snackbar.LENGTH_SHORT).show()
                     } else {
                         val visitorDatabaseRef = mDatabase.getReference("suspicious_users")
                         val uniqueKey = visitorDatabaseRef.push().key
@@ -173,12 +177,13 @@ class LogInActivity : AppCompatActivity() {
                         visitorDatabaseRef.child(uniqueKey!!).setValue(user)
 
                         var message = "Somthing is wrong, we will fix it soon..."
-                        if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        if (it.exception is FirebaseAuthInvalidCredentialsException) {
                             message = "Invalid code entered..."
                         }
                         Log.d(TAG, "signIn failed $message")
                     }
-                })
+
+                }
     }
 
 

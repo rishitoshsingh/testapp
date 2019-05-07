@@ -1,8 +1,12 @@
 package com.alphae.testapp
 
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.Snackbar
+import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -24,11 +28,32 @@ class MainActivity : AppCompatActivity() {
     private var mBottomSheetBehaviour: BottomSheetBehavior<*>? = null
     private lateinit var uploadedUrl: String
 
+    var PERMISSIONS = arrayOf(android.Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.RECORD_AUDIO)
+    var PERMISSION_ALL = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        checkForPermissions()
         viewInitializations()
         listnersInitializations()
+    }
+
+    private fun checkForPermissions() {
+        if (!hasPermissions(this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL)
+        }
+    }
+
+    fun hasPermissions(context: Context?, permissions: Array<String>): Boolean {
+        if (context != null && permissions != null) {
+            for (permission in permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 
     fun numberClicked(view: View) {
@@ -103,9 +128,8 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("uploadedUrl", uploadedUrl)
                 startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
 
-                Toast.makeText(this, "Login", Toast.LENGTH_LONG).show()
-            } else if (!numberValidated) Toast.makeText(this, "Check Your Number", Toast.LENGTH_LONG).show()
-            else if (!selfieUploaded) Toast.makeText(this, "Please Take your Selfie", Toast.LENGTH_LONG).show()
+            } else if (!numberValidated) Snackbar.make(main_root, "Check Your Number", Snackbar.LENGTH_LONG).show()
+            else if (!selfieUploaded) Snackbar.make(main_root, "Please Take your Selfie", Snackbar.LENGTH_LONG).show()
         }
 
     }
