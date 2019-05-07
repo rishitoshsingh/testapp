@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     private var mBottomSheetBehaviour: BottomSheetBehavior<*>? = null
     private lateinit var uploadedUrl: String
+
+    private lateinit var mRadioOtpButtons: ArrayList<RadioButton>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,17 +53,15 @@ class MainActivity : AppCompatActivity() {
         take_selfie.requestFocus()
         val nestedScrollView = findViewById<View>(R.id.numpad_bottom_sheet)
         mBottomSheetBehaviour = BottomSheetBehavior.from(nestedScrollView)
-    }
 
-    override fun onBackPressed() {
-        if (numpadState) {
-            number_text_view.isFocusable = false
-            number_text_view.isFocusableInTouchMode = true
-
-            numpadState = false
-            mBottomSheetBehaviour?.state = BottomSheetBehavior.STATE_COLLAPSED
-            fab.setImageDrawable(getDrawable(R.drawable.ic_arrow_up))
-        } else super.onBackPressed()
+        mRadioOtpButtons.apply {
+            add(first)
+            add(second)
+            add(third)
+            add(fourth)
+            add(fifth)
+            add(sixth)
+        }
     }
 
     private fun listnersInitializations() {
@@ -118,6 +119,14 @@ class MainActivity : AppCompatActivity() {
         numberValidated = number_text_view.text.length == 10
     }
 
+    private fun enterOtp(position: Int) {
+        mRadioOtpButtons[position].isChecked = true
+    }
+
+    private fun deleteOtp(position: Int) {
+        mRadioOtpButtons[position].isChecked = false
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == SELFIE_UPLOADED) {
@@ -126,5 +135,16 @@ class MainActivity : AppCompatActivity() {
                 uploadedUrl = data.getStringExtra("uploadedUrl")
             }
         } else Toast.makeText(this, "Error during Taking Selfie", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBackPressed() {
+        if (numpadState) {
+            number_text_view.isFocusable = false
+            number_text_view.isFocusableInTouchMode = true
+
+            numpadState = false
+            mBottomSheetBehaviour?.state = BottomSheetBehavior.STATE_COLLAPSED
+            fab.setImageDrawable(getDrawable(R.drawable.ic_arrow_up))
+        } else super.onBackPressed()
     }
 }
