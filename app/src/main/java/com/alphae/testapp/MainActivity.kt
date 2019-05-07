@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,8 +23,6 @@ class MainActivity : AppCompatActivity() {
 
     private var mBottomSheetBehaviour: BottomSheetBehavior<*>? = null
     private lateinit var uploadedUrl: String
-
-    private lateinit var mRadioOtpButtons: ArrayList<RadioButton>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,14 +51,6 @@ class MainActivity : AppCompatActivity() {
         val nestedScrollView = findViewById<View>(R.id.numpad_bottom_sheet)
         mBottomSheetBehaviour = BottomSheetBehavior.from(nestedScrollView)
 
-        mRadioOtpButtons.apply {
-            add(first)
-            add(second)
-            add(third)
-            add(fourth)
-            add(fifth)
-            add(sixth)
-        }
     }
 
     private fun listnersInitializations() {
@@ -108,6 +97,12 @@ class MainActivity : AppCompatActivity() {
         login_button.setOnClickListener {
             numberValidation()
             if (numberValidated && selfieUploaded) {
+
+                val intent = Intent(this, LogInActivity::class.java)
+                intent.putExtra("phoneNumber", number_text_view.text.toString())
+                intent.putExtra("uploadedUrl", uploadedUrl)
+                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
+
                 Toast.makeText(this, "Login", Toast.LENGTH_LONG).show()
             } else if (!numberValidated) Toast.makeText(this, "Check Your Number", Toast.LENGTH_LONG).show()
             else if (!selfieUploaded) Toast.makeText(this, "Please Take your Selfie", Toast.LENGTH_LONG).show()
@@ -117,14 +112,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun numberValidation() {
         numberValidated = number_text_view.text.length == 10
-    }
-
-    private fun enterOtp(position: Int) {
-        mRadioOtpButtons[position].isChecked = true
-    }
-
-    private fun deleteOtp(position: Int) {
-        mRadioOtpButtons[position].isChecked = false
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

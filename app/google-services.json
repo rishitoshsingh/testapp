@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "496294769019-r8o0c0h0i44gdrfl0sokqvg8dbi2d1nc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alphae.testapp",
+            "certificate_hash": "cc467f666f22210328b1a7e24ff026a887c9dfd3"
+          }
+        },
+        {
           "client_id": "496294769019-6pnb0p4rqjmhj8f3nuevmva5mcaujnet.apps.googleusercontent.com",
           "client_type": 3
         }
