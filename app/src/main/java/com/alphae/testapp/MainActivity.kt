@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clearClicked(view: View) {
-        if (number_text_view.isFocused) {
+        if (number_text_view.isFocused && number_text_view.text.isNotEmpty()) {
             val length = number_text_view.text.length
             number_text_view.text.delete(length - 1, length)
         }
@@ -91,10 +91,8 @@ class MainActivity : AppCompatActivity() {
         number_text_view.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 val number = s.toString().length
-                if (number > 10) {
+                if (number > 10)
                     s?.delete(number - 1, number)
-                }
-                numberValidated = number == 10
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -107,13 +105,17 @@ class MainActivity : AppCompatActivity() {
         }
 
         login_button.setOnClickListener {
-            when {
-                numberValidated -> Toast.makeText(this, "Check Your Number", Toast.LENGTH_LONG).show()
-                selfieUploaded -> Toast.makeText(this, "Please Take your Selfie", Toast.LENGTH_LONG).show()
-                else -> Toast.makeText(this, "Login", Toast.LENGTH_LONG).show()
-            }
+            numberValidation()
+            if (numberValidated && selfieUploaded) {
+                Toast.makeText(this, "Login", Toast.LENGTH_LONG).show()
+            } else if (!numberValidated) Toast.makeText(this, "Check Your Number", Toast.LENGTH_LONG).show()
+            else if (!selfieUploaded) Toast.makeText(this, "Please Take your Selfie", Toast.LENGTH_LONG).show()
         }
 
+    }
+
+    private fun numberValidation() {
+        numberValidated = number_text_view.text.length == 10
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

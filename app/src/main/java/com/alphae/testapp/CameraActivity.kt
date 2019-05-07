@@ -25,7 +25,6 @@ class CameraActivity : AppCompatActivity() {
 
     private var cameraKitView: CameraKitView? = null
     private val TAG: String = "CameraActivity"
-    val UPLOADED: Int = 201
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
