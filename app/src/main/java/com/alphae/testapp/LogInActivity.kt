@@ -53,9 +53,11 @@ class LogInActivity : AppCompatActivity() {
         visitorDatabaseRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {}
             override fun onDataChange(p0: DataSnapshot) {
+                Log.d(TAG, "Got Data")
                 for (child in p0.children) {
                     val user = child.getValue(User::class.java)
                     if (user?.mPhoneNumber.equals(mPhoneNumber)) {
+                        Log.d(TAG, "Found Old User")
                         oldUser = true
                         user?.updateVisit()
                         child.ref.setValue(user)
@@ -64,6 +66,7 @@ class LogInActivity : AppCompatActivity() {
                     }
                 }
                 if (!oldUser) {
+                    Log.d(TAG, "Old User not found")
                     sendVerificationCode(mPhoneNumber)
                 }
             }
@@ -116,6 +119,7 @@ class LogInActivity : AppCompatActivity() {
                 //Getting the code sent by SMS
                 val code = phoneAuthCredential.smsCode
                 if (code != null) {
+                    Log.d(TAG, "VerificationColplete, Auto read Code")
                     var i = 0
                     for (n in code) enterOtp(i++, n.toString())
                     verifyVerificationCode(code)
