@@ -1,7 +1,7 @@
 # TestApp
 
 ## Screenshots
-![alt text](screenshots/1.png "1" =100x) ![alt text](screenshots/2.png "2" =100x) ![alt text](screenshots/3.png "3" =100x) ![alt text](screenshots/4.png "4" =100x)
+![alt text](./screenshots/1.png "1" =100x) ![alt text](screenshots/2.png "2" =100x) ![alt text](screenshots/3.png "3" =100x) ![alt text](screenshots/4.png "4" =100x)
 ![alt text](screenshots/5.png "5" =100x) 
 
 ## Task
